@@ -17,4 +17,7 @@ public abstract class Agent {
         armoire.put(this, new ArrayList<Message>());
     }
 
+    public abstract Message initieNegotiation();
+
+    public abstract Message negocie(Message proposition);
 }
