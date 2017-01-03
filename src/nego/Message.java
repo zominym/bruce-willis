@@ -14,6 +14,16 @@ public class Message {
     public int id_proposition;
     public Message previous;
 
+    public Message(Agent exp, Agent dest, Performatif perf, Item obj, Message prev) {
+        this.expediteur = exp;
+        this.destinataire = dest;
+        this.type = perf;
+        this.objet = obj;
+        if (prev != null)
+            this.id_proposition = prev.id_proposition + 1;
+        this.previous = prev;
+    }
+
     public void send() {
         Agent.armoire.get(destinataire).add(this);
     }
