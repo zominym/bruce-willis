@@ -38,4 +38,5 @@ public abstract class Agent {
 
     public abstract Message negocier(Message m);
 
+    public abstract Message initieNegotiation();
 }

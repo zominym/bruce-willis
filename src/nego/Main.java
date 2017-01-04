@@ -28,7 +28,7 @@ public class Main {
         //Boucle de negotiation
         do{
             nextAgent = agents.get(i);
-            proposition = nextAgent.negocie(proposition);
+            proposition = nextAgent.negocier(proposition);
             i = (i+1)%2;
         }while(proposition.estAccepte() || proposition.estRefuse());
     }

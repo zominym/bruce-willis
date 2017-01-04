@@ -17,6 +17,7 @@ public class Negociateur extends Agent {
         super(nego, obj);
     }
 
+    @Override
     public Message negocier(Message m) {
         if (m.type == Performatif.REFUS)
             return null;
@@ -29,6 +30,11 @@ public class Negociateur extends Agent {
             mp.send();
             return mp;
         }
+        return null;
+    }
+
+    @Override
+    public Message initieNegotiation() {
         return null;
     }
 }
