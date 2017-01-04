@@ -17,7 +17,7 @@ public class Fournisseur extends Agent {
     }
 
     @Override
-    public Message initieNegotiation() {
+    public Message initierNegotiation(Agent dest) {
         return null;
     }
 }

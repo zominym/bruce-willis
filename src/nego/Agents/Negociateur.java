@@ -42,8 +42,9 @@ public class Negociateur extends Agent {
         return mp;
     }
 
-    @Override
-    public Message initieNegotiation() {
-        return null;
+    public Message initierNegotiation(Agent dest) {
+        Message mp = new Message(this, dest, Performatif.PROPOSITION, objectif, null);
+        mp.send();
+        return mp;
     }
 }
