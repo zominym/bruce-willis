@@ -16,7 +16,6 @@ public class Item {
     }
 
     public Date getDateDepart() {
-
         return dateDepart;
     }
 

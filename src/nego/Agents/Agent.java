@@ -17,7 +17,19 @@ public abstract class Agent {
         armoire.put(this, new ArrayList<Message>());
     }
 
-    public abstract Message initieNegotiation();
+    public List<Message> getMessagesNonLus() {
+        List<Message> ret = new ArrayList<>();
+        for (Message m : armoire.get(this)) {
+            if (!m.isRead)
+                ret.add(m);
+        }
+        return ret;
+    }
 
-    public abstract Message negocie(Message proposition);
+    public void negocier() {
+        for (Message m : getMessagesNonLus()) {
+
+        }
+    }
+
 }
