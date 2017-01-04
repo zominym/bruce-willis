@@ -26,11 +26,20 @@ public class Negociateur extends Agent {
             return null;
         }
         if (nego_dispo <= 0) {
-            Message mp = m.createReponse(Performatif.REFUS, new Item());
+            Message mp = m.createReponse(Performatif.REFUS, m.objet);
             mp.send();
             return mp;
         }
-        return null;
+        int prixtemp = (int) (m.previous.objet.getPrix() * 1.10);
+        if (m.objet.getPrix() < prixtemp) {
+            Message mp = m.createReponse(Performatif.ACCEPTATION, m.objet);
+            mp.send();
+            return mp;
+        }
+        Item prop = new Item(m.objet.getDateDepart(), m.objet.getVilleDepart(), m.objet.getVilleArrivee(), prixtemp);
+        Message mp = m.createReponse(Performatif.PROPOSITION, prop);
+        mp.send();
+        return mp;
     }
 
     @Override
