@@ -33,4 +33,10 @@ public class Item {
         this.villeDepart = villeDepart;
         this.villeArrivee = villeArrivee;
     }
+
+    public String toString() {
+        String ret = "";
+        ret += "PRIX : " + prix + ", DATE_D : " + dateDepart + ", VILLE_D : " + villeDepart + ", VILLE_A : " + villeArrivee;
+        return ret;
+    }
 }
