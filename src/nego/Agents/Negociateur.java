@@ -18,17 +18,18 @@ public class Negociateur extends Agent {
         super(nego);
     }
 
-    public void negocier(Message m) {
+    public Message negocier(Message m) {
         if (m.type == Performatif.REFUS)
-            return;
+            return null;
         if (m.type == Performatif.ACCEPTATION) {
             this.nego_dispo --;
-            return;
+            return null;
         }
         if (nego_dispo <= 0) {
             Message mp = m.createReponse(Performatif.REFUS, new Item());
             mp.send();
-            return;
+            return mp;
         }
+        return null;
     }
 }
