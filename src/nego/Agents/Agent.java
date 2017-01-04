@@ -33,6 +33,7 @@ public abstract class Agent {
         return ret;
     }
 
-    public abstract void negocier(Message m);
+    public abstract Message negocier(Message proposition);
 
+    public abstract Message initieNegotiation();
 }
