@@ -27,6 +27,8 @@ public class Negociateur extends Agent {
         }
         if (nego_dispo <= 0) {
             Message mp = m.createReponse(Performatif.REFUS, new Item());
+            mp.send();
+            return;
         }
     }
 }
