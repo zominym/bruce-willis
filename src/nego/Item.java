@@ -37,4 +37,10 @@ public class Item {
     public void setPrix(int prix) {
         this.prix = prix;
     }
+
+    public String toString() {
+        String ret = "";
+        ret += "PRIX : " + prix + ", DATE_D : " + dateDepart + ", VILLE_D : " + villeDepart + ", VILLE_A : " + villeArrivee;
+        return ret;
+    }
 }

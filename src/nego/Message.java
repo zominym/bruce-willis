@@ -53,6 +53,13 @@ public class Message {
         this.isRead = true;
     }
 
+    public String toString() {
+        String ret = "";
+        ret += "DE : " +expediteur + ", A : " + destinataire + ", TYPE : " + type + ", ID : " + id_proposition + "\n";
+        ret += objet.toString();
+        return ret;
+    }
+
     public int getIdProposition() {
         return id_proposition;
     }
