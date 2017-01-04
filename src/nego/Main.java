@@ -24,7 +24,7 @@ public class Main {
 
         //Création de la premiere offre
         Agent nextAgent = agents.get(i);
-        Message proposition = nextAgent.initieNegotiation();
+        Message proposition = nextAgent.initierNegotiation(agents.get(1));
         i++;
 
         //Boucle de negotiation
