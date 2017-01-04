@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import nego.Item;
 import nego.Message;
 import nego.Performatif;
 
@@ -12,6 +13,7 @@ import nego.Performatif;
  */
 public abstract class Agent {
     int nego_dispo;
+    Item objectif;
 
     public static HashMap<Agent, List<Message>> armoire = new HashMap<>();
 
@@ -19,9 +21,10 @@ public abstract class Agent {
         armoire.put(this, new ArrayList<Message>());
     }
 
-    public Agent(int nego) {
+    public Agent(int nego, Item obj) {
         this();
         this.nego_dispo = nego;
+        this.objectif = obj;
     }
 
     public List<Message> getMessagesNonLus() {
@@ -33,6 +36,6 @@ public abstract class Agent {
         return ret;
     }
 
-    public abstract void negocier(Message m);
+    public abstract Message negocier(Message m);
 
 }

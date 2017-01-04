@@ -9,13 +9,12 @@ import nego.Performatif;
  */
 public class Negociateur extends Agent {
 
-
     public Negociateur() {
         super();
     }
 
-    public Negociateur(int nego) {
-        super(nego);
+    public Negociateur(int nego, Item obj) {
+        super(nego, obj);
     }
 
     public Message negocier(Message m) {
