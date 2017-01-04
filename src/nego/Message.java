@@ -44,8 +44,24 @@ public class Message {
     public boolean estRefuse() {
         return type == Performatif.REFUS;
     }
+
+    public boolean estProposition(){
+        return type == Performatif.PROPOSITION;
+    }
+
     public void read() {
         this.isRead = true;
     }
 
+    public int getIdProposition() {
+        return id_proposition;
+    }
+
+    public int getObjetPrix() {
+        return objet.getPrix();
+    }
+
+    public Item getObjet() {
+        return objet;
+    }
 }

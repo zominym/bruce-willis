@@ -33,4 +33,8 @@ public class Item {
         this.villeDepart = villeDepart;
         this.villeArrivee = villeArrivee;
     }
+
+    public void setPrix(int prix) {
+        this.prix = prix;
+    }
 }
