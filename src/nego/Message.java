@@ -22,10 +22,15 @@ public class Message {
         this.destinataire = dest;
         this.type = perf;
         this.objet = obj;
+        this.id_proposition = 0;
         if (prev != null)
             this.id_proposition = prev.id_proposition + 1;
         this.previous = prev;
         this.isRead = false;
+    }
+
+    public Message createReponse(Performatif perf, Item obj) {
+        return new Message(destinataire, expediteur, perf, obj, this);
     }
 
     public void send() {

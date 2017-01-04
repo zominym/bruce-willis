@@ -33,4 +33,11 @@ public class Item {
         this.villeDepart = villeDepart;
         this.villeArrivee = villeArrivee;
     }
+
+    public Item() {
+        this.prix = 0;
+        this.dateDepart = null;
+        this.villeDepart = null;
+        this.villeArrivee = null;
+    }
 }

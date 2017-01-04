@@ -1,11 +1,32 @@
 package nego.Agents;
 
+import nego.Item;
+import nego.Message;
+import nego.Performatif;
+
 /**
  * Created by atanakar on 03/01/17.
  */
 public class Negociateur extends Agent {
 
+
     public Negociateur() {
         super();
+    }
+
+    public Negociateur(int nego) {
+        super(nego);
+    }
+
+    public void negocier(Message m) {
+        if (m.type == Performatif.REFUS)
+            return;
+        if (m.type == Performatif.ACCEPTATION) {
+            this.nego_dispo --;
+            return;
+        }
+        if (nego_dispo <= 0) {
+            Message mp = m.createReponse(Performatif.REFUS, new Item());
+        }
     }
 }
