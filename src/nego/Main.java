@@ -19,8 +19,8 @@ public class Main {
 
         //Creation des agents allant effectuer la negotiation
         ArrayList<Agent> agents = new ArrayList<>();
-        agents.add(new Negociateur(0, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 150)));
-        agents.add(new Fournisseur(0, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 200)));
+        agents.add(new Negociateur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 150)));
+        agents.add(new Fournisseur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 200)));
 
         //Création de la premiere offre
         Agent nextAgent = agents.get(i);

@@ -31,8 +31,10 @@ public class Negociateur extends Agent {
             mp.send();
             return mp;
         }
-        int prixtemp = (int) (m.previous.objet.getPrix() * 1.10);
+        int prixtemp = (int) (m.previous.objet.getPrix() + 5);
+        //System.out.println(">>>" + m.previous.toString());
         if (m.objet.getPrix() < prixtemp) {
+            //System.out.println("accepted because " + prixtemp + ">" + m.objet.getPrix());
             Message mp = m.createReponse(Performatif.ACCEPTATION, m.objet);
             mp.send();
             return mp;
