@@ -34,6 +34,8 @@ public class Main {
             nextAgent = agents.get(i);
             proposition = nextAgent.negocier(proposition);
             i = (i+1)%2;
+            if (proposition.getObjet() == null)
+                System.out.println("La proposition est nulle");
             System.out.println(proposition.toString());
         }while(proposition.estProposition());
 
