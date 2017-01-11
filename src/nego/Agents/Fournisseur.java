@@ -30,7 +30,7 @@ public class Fournisseur extends Agent {
         if(proposition.estProposition()){//si le negociateur à fait une proposition
             if(proposition.getObjetPrix() < objectif.getPrix() * 0.90){ //trop en dessous de l'objectif
 
-                Item newProposition = proposition.getObjet();
+                Item newProposition = new Item(proposition.getObjet());
                 // et si on a deja fait une offre on baisse notre offre précédente de 5
                 if(proposition.previous != null) {
                     newProposition.setPrix(proposition.previous.getObjet().getPrix() - 5);
