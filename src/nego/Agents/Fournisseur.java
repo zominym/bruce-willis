@@ -19,6 +19,7 @@ public class Fournisseur extends Agent {
 
     @Override
     public Message negocier(Message proposition) {
+        System.out.println("Negocie");
         nego_dispo++;
 
         if(proposition.estAccepte())

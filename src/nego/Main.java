@@ -14,7 +14,6 @@ import java.util.Date;
 public class Main {
 
     public static void main(String args[]) {
-        System.out.println("Mabit");
         int i = 0;
 
         //Creation des agents allant effectuer la negotiation
@@ -25,15 +24,17 @@ public class Main {
         //Création de la premiere offre
         Agent nextAgent = agents.get(i);
         Message proposition = nextAgent.initierNegotiation(agents.get(1));
+        System.out.println(proposition.toString());
         i++;
 
         //Boucle de negotiation
         do{
+            System.out.println();
             nextAgent = agents.get(i);
             proposition = nextAgent.negocier(proposition);
             i = (i+1)%2;
             System.out.println(proposition.toString());
-        }while(proposition.estAccepte() || proposition.estRefuse());
+        }while(!proposition.estAccepte() && !proposition.estRefuse());
 
     }
 }

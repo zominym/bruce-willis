@@ -19,6 +19,7 @@ public class Negociateur extends Agent {
 
     @Override
     public Message negocier(Message m) {
+        System.out.println("Negocie");
         if (m.type == Performatif.REFUS)
             return null;
         if (m.type == Performatif.ACCEPTATION) {

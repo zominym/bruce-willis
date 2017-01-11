@@ -38,11 +38,13 @@ public class Message {
     }
 
     public boolean estAccepte() {
-        return type == Performatif.ACCEPTATION;
+        boolean truc = type == Performatif.ACCEPTATION;
+        return truc;
     }
 
     public boolean estRefuse() {
-        return type == Performatif.REFUS;
+        boolean truc = type == Performatif.REFUS;
+        return truc;
     }
 
     public boolean estProposition(){
