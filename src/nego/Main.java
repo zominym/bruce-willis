@@ -1,5 +1,6 @@
 package nego;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import nego.Agents.Agent;
 import nego.Agents.Fournisseur;
 import nego.Agents.Negociateur;
@@ -34,7 +35,10 @@ public class Main {
             proposition = nextAgent.negocier(proposition);
             i = (i+1)%2;
             System.out.println(proposition.toString());
-        }while(!proposition.estAccepte() && !proposition.estRefuse());
+        }while(proposition.estProposition());
+
+        System.out.println("\n\n***************************************\nresultat de la conversation : \n");
+        System.out.println(proposition.toString());
 
     }
 }
