@@ -27,13 +27,26 @@ public class Fournisseur extends Agent {
         if(proposition.getIdProposition()>12)
             return proposition.createReponse(Performatif.REFUS,null);
 
-        if(proposition.estProposition()){
-            if(proposition.getObjetPrix() < objectif.getPrix() * 0.90){
+        if(proposition.estProposition()){//si le negociateur à fait une proposition
+            if(proposition.getObjetPrix() < objectif.getPrix() * 0.90){ //trop en dessous de l'objectif
+
                 Item newProposition = proposition.getObjet();
-                newProposition.setPrix(objectif.getPrix() + 5);
-                return proposition.createReponse(Performatif.PROPOSITION, newProposition);
+                // et si on a deja fait une offre on baisse notre offre précédente de 5
+                if(proposition.previous != null) {
+                    newProposition.setPrix(proposition.previous.getObjet().getPrix() - 5);
+                }
+                else { //sinon on envoi notre objectif
+                    newProposition = objectif;
+                }
+
+
+                // si la proposition est toujours acceptable on la propose
+                if(newProposition.getPrix() > objectif.getPrix() * 0.90)
+                    return proposition.createReponse(Performatif.PROPOSITION, newProposition);
+                else //sinon on refuse
+                    return proposition.createReponse(Performatif.REFUS,null);
             }
-            else{
+            else{//si la proposition est correct on accepte
                 return proposition.createReponse(Performatif.ACCEPTATION,proposition.getObjet());
             }
         }
