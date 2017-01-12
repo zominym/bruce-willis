@@ -29,9 +29,10 @@ public class Fournisseur extends Agent {
             return proposition.createReponse(Performatif.REFUS,null);
 
         if(proposition.estProposition()){//si le negociateur à fait une proposition
+            Item newProposition = new Item(proposition.getObjet());
             if(proposition.getObjetPrix() < objectif.getPrix() * 0.90){ //trop en dessous de l'objectif
 
-                Item newProposition = new Item(proposition.getObjet());
+
                 // et si on a deja fait une offre on baisse notre offre précédente de 5
                 if(proposition.previous != null) {
                     newProposition.setPrix(proposition.previous.getObjet().getPrix() - 5);
@@ -47,8 +48,18 @@ public class Fournisseur extends Agent {
                 else //sinon on refuse
                     return proposition.createReponse(Performatif.REFUS,null);
             }
-            else{//si la proposition est correct on accepte
-                return proposition.createReponse(Performatif.ACCEPTATION,proposition.getObjet());
+            else{//si la proposition est correct et qu'il ne reste plus de proposition possible on accepte
+                if(proposition.getIdProposition()==11)
+                    return proposition.createReponse(Performatif.ACCEPTATION,proposition.getObjet());
+                else {
+                    if(proposition.previous != null) { //on choisis la moitié entre notre derniere proposition et la sienne
+                        newProposition.setPrix((proposition.previous.getObjet().getPrix() + proposition.getObjetPrix()) /2);
+                    }
+                    else { //sinon on envoi notre objectif
+                        newProposition = objectif;
+                    }
+                    return proposition.createReponse(Performatif.PROPOSITION, newProposition);
+                }
             }
         }
         return null;
