@@ -1,4 +1,4 @@
-package nego;
+package nego.communication;
 
 /**
  * Created by Gaëtan on 03/01/2017.

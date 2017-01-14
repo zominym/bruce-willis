@@ -1,20 +1,22 @@
-package nego.Agents;
+package nego.agents;
 
 import nego.Item;
-import nego.Message;
-import nego.Performatif;
+import nego.Main;
+import nego.communication.Message;
+import nego.communication.Performatif;
+import nego.negociation.INegociation;
 
 /**
  * Created by atanakar on 03/01/17.
  */
 public class Fournisseur extends Agent {
 
-    public Fournisseur() {
-        super();
-    }
+    final double SEUIL_REFUS = 0.8;
 
-    public Fournisseur(int nego, Item obj) {
-        super(nego, obj);
+    public Fournisseur(int nego, Item obj, INegociation tech, String name) {
+        super(nego, obj, tech, name);
+        Main.fournisseurs.add(this);
+        Main.fournisseursToken = true;
     }
 
     @Override
@@ -28,14 +30,14 @@ public class Fournisseur extends Agent {
         if(proposition.getIdProposition()>12)
             return proposition.createReponse(Performatif.REFUS,null);
 
-        if(proposition.estProposition()){//si le negociateur à fait une proposition
+        if(proposition.estProposition()){//si le negociateur a fait une proposition
             Item newProposition = new Item(proposition.getObjet());
-            if(proposition.getObjetPrix() < objectif.getPrix() * 0.90){ //trop en dessous de l'objectif
+            if(proposition.getObjetPrix() < objectif.getPrix() * SEUIL_REFUS){ //trop en dessous de l'objectif
 
 
-                // et si on a deja fait une offre on baisse notre offre précédente de 5
+                // et si on a deja fait une offre on baisse notre offre précédente selon notre technique
                 if(proposition.previous != null) {
-                    newProposition.setPrix(proposition.previous.getObjet().getPrix() - 5);
+                    newProposition.setPrix(proposition.previous.getObjetPrix() - 5);
                 }
                 else { //sinon on envoi notre objectif
                     newProposition = objectif;
@@ -43,7 +45,7 @@ public class Fournisseur extends Agent {
 
 
                 // si la proposition est toujours acceptable on la propose
-                if(newProposition.getPrix() > objectif.getPrix() * 0.90)
+                if(newProposition.getPrix() > objectif.getPrix() * SEUIL_REFUS)
                     return proposition.createReponse(Performatif.PROPOSITION, newProposition);
                 else //sinon on refuse
                     return proposition.createReponse(Performatif.REFUS,null);
@@ -52,8 +54,8 @@ public class Fournisseur extends Agent {
                 if(proposition.getIdProposition()==11)
                     return proposition.createReponse(Performatif.ACCEPTATION,proposition.getObjet());
                 else {
-                    if(proposition.previous != null) { //on choisis la moitié entre notre derniere proposition et la sienne
-                        newProposition.setPrix((proposition.previous.getObjet().getPrix() + proposition.getObjetPrix()) /2);
+                    if(proposition.previous != null) { //on choisit de négocier le prix selon notre technique
+                        newProposition.setPrix(technique.negocier(proposition).getPrix());
                     }
                     else { //sinon on envoi notre objectif
                         newProposition = objectif;
@@ -68,5 +70,28 @@ public class Fournisseur extends Agent {
     @Override
     public Message initierNegotiation(Agent dest) {
         return null;
+    }
+
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        while(this.nego_dispo > 0) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            for (Message m : getMessagesNonLus()) {
+                System.out.println(negocier(m));
+                m.lire();
+            }
+        }
+        System.out.println("Stopping fournisseur");
+        Main.fournisseurs.remove(this);
+        this.stop();
     }
 }

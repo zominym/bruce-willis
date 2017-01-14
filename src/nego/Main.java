@@ -1,27 +1,35 @@
 package nego;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-import nego.Agents.Agent;
-import nego.Agents.Fournisseur;
-import nego.Agents.Negociateur;
+import nego.agents.Agent;
+import nego.agents.Fournisseur;
+import nego.agents.Negociateur;
+import nego.communication.Message;
+import nego.negociation.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by atanakar on 03/01/17.
  */
 public class Main {
 
+    public static List<Fournisseur> fournisseurs = new ArrayList<>();
+    public static boolean fournisseursToken = false;
+
     public static void main(String args[]) {
         int i = 0;
 
         //Creation des agents allant effectuer la negotiation
         ArrayList<Agent> agents = new ArrayList<>();
-        agents.add(new Negociateur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 170)));
-        agents.add(new Fournisseur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 200)));
+        Agent ag1 = new Negociateur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 170), new Plus5(), "Nego");
+        ag1.start();
 
+        Agent ag2 = new Fournisseur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 200), new Moyenne(), "Four");
+        ag2.start();
+
+        /*
         //Création de la premiere offre
         Agent nextAgent = agents.get(i);
         Message proposition = nextAgent.initierNegotiation(agents.get(1));
@@ -41,6 +49,9 @@ public class Main {
 
         System.out.println("\n\n***************************************\nresultat de la conversation : \n");
         System.out.println(proposition.toString());
+        */
+
+        while(true);
 
     }
 }

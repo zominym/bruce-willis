@@ -1,36 +1,38 @@
-package nego.Agents;
+package nego.agents;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import nego.Item;
-import nego.Message;
-import nego.Performatif;
+import nego.communication.Message;
+import nego.negociation.INegociation;
 
 /**
  * Created by atanakar on 03/01/17.
  */
-public abstract class Agent {
+public abstract class Agent extends Thread {
     int nego_dispo;
     Item objectif;
+    INegociation technique;
+    String nom;
 
     public static HashMap<Agent, List<Message>> armoire = new HashMap<>();
 
-    public Agent() {
+    public Agent(int nego, Item obj, INegociation tech, String name) {
         armoire.put(this, new ArrayList<Message>());
-    }
-
-    public Agent(int nego, Item obj) {
-        this();
         this.nego_dispo = nego;
         this.objectif = obj;
+        this.technique = tech;
+        this.nom = name;
     }
 
     public List<Message> getMessagesNonLus() {
+        //System.out.println(armoire.keySet().size());
+        //System.out.println(armoire.get(this).size());
         List<Message> ret = new ArrayList<>();
         for (Message m : armoire.get(this)) {
-            if (!m.isRead)
+            if (!m.estLu)
                 ret.add(m);
         }
         return ret;
@@ -39,4 +41,11 @@ public abstract class Agent {
     public abstract Message negocier(Message m);
 
     public abstract Message initierNegotiation(Agent dest);
+
+    @Override
+    public abstract void run();
+
+    public String getNom() {
+        return nom;
+    }
 }

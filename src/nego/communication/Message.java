@@ -1,8 +1,8 @@
-package nego;
+package nego.communication;
 
-import nego.Agents.Agent;
+import nego.agents.Agent;
 
-import nego.Performatif;
+import nego.Item;
 
 /**
  * Created by atanakar on 03/01/17.
@@ -15,7 +15,7 @@ public class Message {
     public Item objet;
     public int id_proposition;
     public Message previous;
-    public boolean isRead;
+    public boolean estLu;
 
     public Message(Agent exp, Agent dest, Performatif perf, Item obj, Message prev) {
         this.expediteur = exp;
@@ -26,15 +26,16 @@ public class Message {
         if (prev != null)
             this.id_proposition = prev.id_proposition + 1;
         this.previous = prev;
-        this.isRead = false;
+        this.estLu = false;
     }
 
     public Message createReponse(Performatif perf, Item obj) {
         return new Message(destinataire, expediteur, perf, obj, this);
     }
 
-    public void send() {
+    public String send() {
         Agent.armoire.get(destinataire).add(this);
+        return this.toString();
     }
 
     public boolean estAccepte() {
@@ -52,12 +53,12 @@ public class Message {
     }
 
     public void read() {
-        this.isRead = true;
+        this.estLu = true;
     }
 
     public String toString() {
         String ret = "";
-        ret += "DE : " +expediteur + ", A : " + destinataire + ", TYPE : " + type + ", ID : " + id_proposition + "\n";
+        ret += "DE : " +expediteur.getNom() + ", A : " + destinataire.getNom() + ", TYPE : " + type + ", ID : " + id_proposition + "\n";
         if (objet != null)
             ret += objet.toString();
         else
@@ -75,5 +76,11 @@ public class Message {
 
     public Item getObjet() {
         return objet;
+    }
+
+    public void setObject(Item obj) { this.objet = obj; }
+
+    public void lire() {
+        this.estLu = true;
     }
 }
