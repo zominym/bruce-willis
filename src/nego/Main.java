@@ -19,7 +19,7 @@ public class Main {
 
         //Creation des agents allant effectuer la negotiation
         ArrayList<Agent> agents = new ArrayList<>();
-        agents.add(new Negociateur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 150)));
+        agents.add(new Negociateur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 170)));
         agents.add(new Fournisseur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 200)));
 
         //Création de la premiere offre
@@ -35,7 +35,7 @@ public class Main {
             proposition = nextAgent.negocier(proposition);
             i = (i+1)%2;
             if (proposition.getObjet() == null)
-                System.out.println("La proposition est nulle");
+                System.out.println(proposition.type);
             System.out.println(proposition.toString());
         }while(proposition.estProposition());
 

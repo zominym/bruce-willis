@@ -58,7 +58,10 @@ public class Message {
     public String toString() {
         String ret = "";
         ret += "DE : " +expediteur + ", A : " + destinataire + ", TYPE : " + type + ", ID : " + id_proposition + "\n";
-        ret += objet.toString();
+        if (objet != null)
+            ret += objet.toString();
+        else
+            ret += "Null Item";
         return ret;
     }
 
