@@ -23,13 +23,18 @@ public class Fournisseur extends Agent {
     public Message negocier(Message proposition) {
         System.out.println("Negocie");
         nego_dispo++;
+        Message reponse;
 
-        if(proposition.estAccepte())
+        if(proposition.estAccepte()) {
+            proposition.send();
             return proposition;
+        }
 
-        if(proposition.getIdProposition()>12)
-            return proposition.createReponse(Performatif.REFUS,null);
-
+        if(proposition.getIdProposition()>12) {
+            reponse = proposition.createReponse(Performatif.REFUS, null);
+            reponse.send();
+            return reponse;
+        }
         if(proposition.estProposition()){//si le negociateur a fait une proposition
             Item newProposition = new Item(proposition.getObjet());
             if(proposition.getObjetPrix() < objectif.getPrix() * SEUIL_REFUS){ //trop en dessous de l'objectif
@@ -46,13 +51,13 @@ public class Fournisseur extends Agent {
 
                 // si la proposition est toujours acceptable on la propose
                 if(newProposition.getPrix() > objectif.getPrix() * SEUIL_REFUS)
-                    return proposition.createReponse(Performatif.PROPOSITION, newProposition);
+                    reponse = proposition.createReponse(Performatif.PROPOSITION, newProposition);
                 else //sinon on refuse
-                    return proposition.createReponse(Performatif.REFUS,null);
+                    reponse = proposition.createReponse(Performatif.REFUS,null);
             }
             else{//si la proposition est correct et qu'il ne reste plus de proposition possible on accepte
                 if(proposition.getIdProposition()==11)
-                    return proposition.createReponse(Performatif.ACCEPTATION,proposition.getObjet());
+                    reponse = proposition.createReponse(Performatif.ACCEPTATION,proposition.getObjet());
                 else {
                     if(proposition.previous != null) { //on choisit de négocier le prix selon notre technique
                         newProposition.setPrix(technique.negocier(proposition).getPrix());
@@ -60,9 +65,11 @@ public class Fournisseur extends Agent {
                     else { //sinon on envoi notre objectif
                         newProposition = objectif;
                     }
-                    return proposition.createReponse(Performatif.PROPOSITION, newProposition);
+                    reponse = proposition.createReponse(Performatif.PROPOSITION, newProposition);
                 }
             }
+            reponse.send();
+            return reponse;
         }
         return null;
     }
