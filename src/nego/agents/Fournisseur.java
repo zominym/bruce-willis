@@ -13,6 +13,7 @@ public class Fournisseur extends Agent {
 
     final double SEUIL_REFUS = 0.8;
 
+
     public Fournisseur(int nego, Item obj, INegociation tech, String name) {
         super(nego, obj, tech, name);
         Main.fournisseurs.add(this);
@@ -21,16 +22,18 @@ public class Fournisseur extends Agent {
 
     @Override
     public Message negocier(Message proposition) {
-        System.out.println("Negocie");
-        nego_dispo++;
+        //System.out.println("Negocie");
         Message reponse;
 
         if(proposition.estAccepte()) {
-            proposition.send();
-            return proposition;
+            this.nego_dispo --;
+            return null;
         }
 
-        if(proposition.getIdProposition()>12) {
+        if (proposition.type == Performatif.REFUS)
+            return null;
+
+        if(proposition.getIdProposition()>12 || this.nego_dispo <= 0) {
             reponse = proposition.createReponse(Performatif.REFUS, null);
             reponse.send();
             return reponse;
@@ -56,8 +59,10 @@ public class Fournisseur extends Agent {
                     reponse = proposition.createReponse(Performatif.REFUS,null);
             }
             else{//si la proposition est correct et qu'il ne reste plus de proposition possible on accepte
-                if(proposition.getIdProposition()==11)
-                    reponse = proposition.createReponse(Performatif.ACCEPTATION,proposition.getObjet());
+                if(proposition.getIdProposition()==11) {
+                    reponse = proposition.createReponse(Performatif.ACCEPTATION, proposition.getObjet());
+                    this.nego_dispo --;
+                }
                 else {
                     if(proposition.previous != null) { //on choisit de négocier le prix selon notre technique
                         newProposition.setPrix(technique.negocier(proposition).getPrix());
@@ -93,11 +98,11 @@ public class Fournisseur extends Agent {
                 ex.printStackTrace();
             }
             for (Message m : getMessagesNonLus()) {
-                System.out.println(negocier(m));
+                System.out.println(negocier(m) + "\n");
                 m.lire();
             }
         }
-        System.out.println("Stopping fournisseur");
+        System.out.println("Stopping fournisseur " + nom);
         Main.fournisseurs.remove(this);
         this.stop();
     }

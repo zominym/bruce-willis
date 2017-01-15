@@ -21,7 +21,7 @@ public class Negociateur extends Agent {
 
     @Override
     public Message negocier(Message m) {
-        System.out.println("Negocie");
+        //System.out.println("Negocie");
         if (m.type == Performatif.REFUS)
             return null;
         if (m.type == Performatif.ACCEPTATION) {
@@ -40,6 +40,7 @@ public class Negociateur extends Agent {
         if (m.objet.getPrix() < newItem.getPrix()) {
             //System.out.println("accepted because " + prixtemp + ">" + m.objet.getPrix());
             Message mp = m.createReponse(Performatif.ACCEPTATION, m.objet);
+            this.nego_dispo --;
             mp.send();
             return mp;
         }
@@ -68,6 +69,7 @@ public class Negociateur extends Agent {
             //System.out.println("waiting");
         }
         while (this.nego_dispo > 0) {
+            //System.out.println(this.nego_dispo);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
@@ -76,16 +78,16 @@ public class Negociateur extends Agent {
 
             for (Fournisseur f : Main.fournisseurs) {
                 if (!contacted.contains(f)) {
-                    System.out.println(initierNegotiation(f));
+                    System.out.println(initierNegotiation(f) + "\n");
                     contacted.add(f);
                 }
             }
             for (Message m : getMessagesNonLus()) {
-                System.out.println(negocier(m));
+                System.out.println(negocier(m) + "\n");
                 m.lire();
             }
         }
-        System.out.println("Stopping negociator");
+        System.out.println("Stopping negociator " + nom);
         this.stop();
     }
 }

@@ -23,11 +23,17 @@ public class Main {
 
         //Creation des agents allant effectuer la negotiation
         ArrayList<Agent> agents = new ArrayList<>();
-        Agent ag1 = new Negociateur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 170), new Plus5(), "Nego");
+        Agent ag1 = new Negociateur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 170), new Plus5(), "Nego 1");
         ag1.start();
 
-        Agent ag2 = new Fournisseur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 200), new Moyenne(), "Four");
+        Agent ag3 = new Negociateur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 170), new Plus5(), "Nego 2");
+        ag3.start();
+
+        Agent ag2 = new Fournisseur(2, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 200), new Moyenne(), "Four 1");
         ag2.start();
+
+        //Agent ag4 = new Fournisseur(1, new Item(Calendar.getInstance().getTime(), "Paris", "Lyon", 200), new Moyenne(), "Four 2");
+        //ag4.start();
 
         /*
         //Création de la premiere offre
@@ -51,7 +57,7 @@ public class Main {
         System.out.println(proposition.toString());
         */
 
-        while(true);
+        //while(true);
 
     }
 }

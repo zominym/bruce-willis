@@ -16,6 +16,7 @@ public abstract class Agent extends Thread {
     Item objectif;
     INegociation technique;
     String nom;
+    Message enAttente = null;
 
     public static HashMap<Agent, List<Message>> armoire = new HashMap<>();
 
@@ -35,6 +36,7 @@ public abstract class Agent extends Thread {
             if (!m.estLu)
                 ret.add(m);
         }
+        //System.out.println(nom + " : " + ret.size());
         return ret;
     }
 
